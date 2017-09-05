@@ -1,0 +1,152 @@
+[
+  {
+    "appname": "ownCloud",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "owncloud",
+        "namespace": "library",
+        "imageLink": "owncloud.png",
+        "tag": "latest",
+        "repo": null,
+        "overlay": true,
+        "config": {
+          "HostConfig": {
+            "Binds": [
+              "/var/www/html:/var/www/html"
+            ],
+            "RestartPolicy": {
+              "Name": "unless-stopped"
+            },
+            "PortBindings": {
+              "80/tcp": [
+                {
+                  "HostPort": "10086"
+                }
+              ]
+            },
+            "PublishAllPorts": false
+          }
+        },
+        "volumes": []
+      }
+    ]
+  },
+  {
+    "appname": "transmission",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "transmission",
+        "namespace": "dperson",
+        "imageLink": "transmission.png",
+        "tag": "latest",
+        "repo": null,
+        "overlay": true,
+        "config": {
+          "HostConfig": {
+            "Binds": [
+              "/var/lib/transmission-daemon:/var/lib/transmission-daemon"
+            ],
+            "RestartPolicy": {
+              "Name": "unless-stopped"
+            },
+            "PortBindings": {
+              "9091/tcp": [
+                {
+                  "HostPort": "9091"
+                }
+              ]
+            },
+            "PublishAllPorts": false
+          }
+        },
+        "volumes": []
+      }
+    ]
+  },
+  {
+    "appname": "apache",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "httpd",
+        "namespace": "library",
+        "imageLink": "apache.png",
+        "tag": "latest",
+        "repo": null,
+        "overlay": true,
+        "config": {
+          "HostConfig": {
+            "RestartPolicy": {
+              "Name": "unless-stopped"
+            },
+            "PublishAllPorts": true
+          }
+        },
+        "volumes": []
+      }
+    ]
+  },
+  {
+    "appname": "samba",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "sambad",
+        "namespace": "wisnuc",
+        "imageLink": "sambad.png",
+        "tag": "latest",
+        "repo": null,
+        "overlay": true,
+        "config": {
+          "HostConfig": {
+            "RestartPolicy": {
+              "Name": "unless-stopped"
+            },
+            "PortBindings": {
+              "137/udp": [
+                {
+                  "HostPort": "137"
+                }
+              ],
+              "138/udp": [
+                {
+                  "HostPort": "138"
+                }
+              ],
+              "139/tcp": [
+                {
+                  "HostPort": "139"
+                }
+              ],
+              "445/tcp": [
+                {
+                  "HostPort": "445"
+                }
+              ]
+            },
+            "PublishAllPorts": true
+          }
+        },
+        "volumes": []
+      }
+    ]
+  },
+  {
+    "appname": "busybox",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "busybox",
+        "namespace": "library",
+        "imageLink": "busybox.png",
+        "tag": "latest",
+        "repo": null,
+        "overlay": true,
+        "config": {},
+        "volumes": []
+      }
+    ]
+  }
+]
