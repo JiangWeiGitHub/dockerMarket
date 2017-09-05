@@ -13,6 +13,8 @@ import DockerStateObserver from './dockerStateObserver'
 import { AppInstallTask } from './dockerTasks'
 import { calcRecipeKeyString, appMainContainer, containersToApps } from '../../lib/utility'
 
+import Promise from 'bluebird'
+
 let dockerPidFile = null
 let rootDir = null
 let appDataDir = null
@@ -43,6 +45,7 @@ const prepareDirs = async (dir) => {
   await mkdirpAsync(graphDir)
 
   DOCKER('Create: ' + dockerPidFile)
+  console.log('Create: ' + dockerPidFile)
   await fs.openAsync(dockerPidFile, 'w', (err) => { DOCKER('Create pid file failed: ' + err) })
 }
 
@@ -114,27 +117,41 @@ const daemonStart = async () => {
   let dockerDaemon = child.spawn('docker', args, opts)
 
   dockerDaemon.on('error', err => {
+    
     DOCKER('dockerDaemon error >>>>')
+    console.log('dockerDaemon error >>>>')
     DOCKER(err)
+    console.log(err)
     DOCKER('dockerDaemon error <<<<')
+    console.log('dockerDaemon error <<<<')
   })
 
   dockerDaemon.on('exit', (code, signal) => {
+    console.log('aaaaaa')
     dockerDaemon = null
     if (code !== undefined) DOCKER(`Daemon exits with exitcode ${code}`)
+    console.log('bbbbbb')
     DOCKER(args)
+    console.log(args)
     if (signal !== undefined) DOCKER(`Daemon exits with signal ${signal}`)
   })
 
-  await Promise.delay(3000)
+  // await Promise.delay(3000)
+  // console.log(dockerDaemon)
 
-  if (dockerDaemon === null) throw 'docker daemon stopped right after started'
-  dockerDaemon.unref()
+  console.log('cccccc')
+
+  // if (dockerDaemon === null) throw 'docker daemon stopped right after started'
+  // dockerDaemon.unref()
+
+  console.log('dddddd')
 
   await startDockerEvents()
   DOCKER('Events listener started')
+  console.log('Events listener started')
   refreshAppstore()
   DOCKER('Appstore reloading')
+  console.log('Appstore reloading')
 
   dockerStatus.status = 'Started'
 }
@@ -143,11 +160,16 @@ const daemonStopCmd = `start-stop-daemon --stop --pidfile ${dockerPidFile} --ret
 
 const daemonStop3 = callback => 
   child.exec(daemonStopCmd, (err, stdout, stderr) => {
-    if (err) 
-      DOCKER('DaemonStop:', err, stdout, stderr)    
-    else
+    if (err){
+      DOCKER('DaemonStop:', err, stdout, stderr)
+      console.log('DaemonStop:', err, stdout, stderr)
+    }
+    else {
       DOCKER('DaemonStop: success')
-      dockerStatus.status = 'Stopped'
+      console.log('DaemonStop: success')   
+    }      
+    
+    dockerStatus.status = 'Stopped'
 
     callback(err)
   })
@@ -159,11 +181,14 @@ const initAsync = async (dir) => {
   dockerStatus.status = 'Initialized'
 
   DOCKER('docker init dir: ', dir)
+  console.log('docker init dir: ', dir)
 
   await prepareDirs(dir)
 
   DOCKER('Root of the Docker runtime: ', graphDir)
+  console.log('Root of the Docker runtime: ', graphDir)
   DOCKER('Root directory for execution state files: ', execRootDir)
+  console.log('Root directory for execution state files: ', execRootDir)
 
   let probedGraphDir
   try { 
@@ -171,26 +196,32 @@ const initAsync = async (dir) => {
   } catch (e) {}
 
   DOCKER('Probed graph dir: ', probedGraphDir)
+  console.log('Probed graph dir: ', probedGraphDir)
 
   if (probedGraphDir === graphDir) {
     DOCKER(`Daemon already started @ ${rootDir}`)
+    console.log(`Daemon already started @ ${rootDir}`)
   }
   else {
 
     if (probedGraphDir) {
       DOCKER(`Another daemon already started (graphDir) @ {probedGraphDir}, try stopping it`)
+      console.log(`Another daemon already started (graphDir) @ {probedGraphDir}, try stopping it`)
       await daemonStop()
       await Promise.delay(1000)
     }
 
     DOCKER(`Starting daemon @ ${rootDir}`)
+    console.log(`Starting daemon @ ${rootDir}`)
     await daemonStart()
   }
 
   await startDockerEvents()
   DOCKER('Events listener started')
+  console.log('Events listener started')
   refreshAppstore()
   DOCKER('Appstore reloading')
+  console.log('Appstore reloading')
 }
 
 function appStatus(recipeKeyString) {
@@ -222,6 +253,7 @@ async function appInstall(recipeKeyString) {
   let status = appStatus(recipeKeyString)
   if (status !== 'NOTFOUND') {
     DOCKER(`${recipeKeyString} status: ${status}, install rejected`)
+    console.log(`${recipeKeyString} status: ${status}, install rejected`)
     return
   } 
 
@@ -229,12 +261,14 @@ async function appInstall(recipeKeyString) {
   let appstore = storeState().appstore.result
   if (!appstore || !appstore.recipes) {
     DOCKER(`recipes unavail, failed to install ${appname} (${recipeKeyString})`)
+    console.log(`recipes unavail, failed to install ${appname} (${recipeKeyString})`)
     return
   }
 
   let recipe = appstore.recipes.find(r => calcRecipeKeyString(r) === recipeKeyString)
   if (!recipe) {
     DOCKER(`recipe not found: ${recipeKeyString}, install app failed`)
+    console.log(`recipe not found: ${recipeKeyString}, install app failed`)
     return
   }
 
@@ -283,8 +317,10 @@ async function containerDeleteCommand(id) {
   let installeds = docker.computed.installeds
 
   DOCKER('>>>>')
+  console.log('>>>>')
   installeds.forEach(inst => DOCKER(inst.containers))
   DOCKER('<<<<')
+  console.log('<<<<')
 
   let inst = installeds.find(i => {
     return i.containers.find(c => c.Id === id) ? true : false
@@ -292,21 +328,25 @@ async function containerDeleteCommand(id) {
 
   if (inst) {
     DOCKER(`container in apps cannot be deleted directly`)
+    console.log(`container in apps cannot be deleted directly`)
     return null
   }
 
   containerDelete(id)
     .then(r => {
       DOCKER(`containerDelete ${id} success`, r)
+      console.log(`containerDelete ${id} success`, r)
     })
     .catch(e => {
       DOCKER(`containerDelete ${id} failed, error: ${e.errno} ${e.message}`)
+      console.log(`containerDelete ${id} failed, error: ${e.errno} ${e.message}`)
     })
 }
 
 async function installedStart(uuid) {
 
   DOCKER(`installedStart uuid: ${uuid}`)
+  console.log(`installedStart uuid: ${uuid}`)
 
   let state = storeState()
   
@@ -330,6 +370,7 @@ async function installedStart(uuid) {
 async function installedStop(uuid) {
 
   DOCKER(`installedStop uuid: ${uuid}`)
+  console.log(`installedStop uuid: ${uuid}`)
 
   let state = storeState()
   
@@ -353,6 +394,7 @@ async function installedStop(uuid) {
 async function appUninstall(uuid) {
 
   DOCKER(`appUninstall uuid: ${uuid}`)
+  console.log(`appUninstall uuid: ${uuid}`)
 
   let state = storeState()
   
@@ -388,9 +430,11 @@ export default {
     initAsync(dir)
       .then(r => { // r undefined
        DOCKER(`Initialized`)
+       console.log(`Initialized`)
       })
       .catch(e => {
         DOCKER('ERROR: init failed', e)
+        console.log('ERROR: init failed', e)
       })
   },
 }

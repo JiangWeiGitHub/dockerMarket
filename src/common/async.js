@@ -7,6 +7,8 @@ import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
 import xattr from 'fs-xattr'
 
+import Promise from 'bluebird'
+
 Promise.promisifyAll(fs)
 Promise.promisifyAll(child)
 Promise.promisifyAll(xattr)

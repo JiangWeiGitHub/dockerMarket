@@ -13,8 +13,8 @@ class Retrieve {
     this.reposList = null
     this.recipesRepoList = new Map()
     this.appifiRecipesURL = (storeState().developer && storeState().developer.appstoreMaster === true) ?
-      'https://raw.githubusercontent.com/dockerMarket/appifi-recipes/master/release.json' :
-      'https://raw.githubusercontent.com/dockerMarket/appifi-recipes/release/release.json'
+      'https://raw.githubusercontent.com/wisnuc/appifi-recipes/master/release.json' :
+      'https://raw.githubusercontent.com/wisnuc/appifi-recipes/release/release.json'
     RETRIEVE(`Using ${this.appifiRecipesURL}`)
 
   }
