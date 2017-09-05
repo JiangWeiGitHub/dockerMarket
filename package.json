@@ -1,25 +1,11 @@
 {
-  "name": "appifi",
+  "name": "dockermarket",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node build/app.js",
     "build": "babel src --out-dir build",
-    "devel": "nodemon --exec babel-node --ignore web src/app.js",
-    "devel-bootstrap": "nodemon --exec babel-node --ignore web src/app.js --fake-bootstrap",
-    "devel-assets": "nodemon --exec babel-node --ignore web --ignore public/bundle.js assets.js",
-    "devel-appstore": "nodemon --exec babel-node --ignore web --ignore public/bundle.js src/app.js --appstore-master",
-    "webpack": "webpack --watch --watch-poll",
-    "unit": "node_modules/.bin/mocha --compilers js:babel-core/register --recursive test",
-    "fruit-devel": "PORT=3721 nodemon --exec babel-node --ignore tmptest src/fruitmix/main.js --path tmptest",
-    "fruit-family": "PORT=3721 nodemon --ignore 'family/*' --exec babel-node src/fruitmix/main.js --family",
-    "fruit-unit": "NODE_PATH=. mocha --compilers js:babel-core/register --recursive --sort test/fruitmix/unit",
-    "fruit-algo": "NODE_PATH=. NODE_ENV=test mocha --compilers js:babel-core/register --recursive --sort test/fruitmix/algo",
-    "fruit-agent": "NODE_PATH=. NODE_ENV=test mocha --compilers js:babel-core/register --recursive --sort test/fruitmix/agent",
-    "mochamon": "NODE_ENV=test nodemon --exec mocha --compilers js:babel-core/register --recursive --sort",
-    "mocha": "NODE_ENV=test mocha --compilers js:babel-core/register --recursive --sort",
-    "lyc": "NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --compilers js:babel-core/register",
-    "lycmon": "NODE_ENV=test nodemon --exec nyc --reporter=lcov --reporter=text mocha --compilers js:babel-core/register"
+    "devel": "nodemon --exec babel-node --ignore web src/app.js"
   },
   "dependencies": {
     "babel-runtime": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-6.18.0.tgz",

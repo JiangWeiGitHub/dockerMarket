@@ -2,7 +2,6 @@ import Debug from 'debug'
 const RETRIEVE = Debug('APPIFI:APP_STORE:RETRIEVE')
 
 import request from 'superagent'
-import { storeState, storeDispatch } from '../../lib/reducers'
 import { validateRecipe } from '../../lib/utility'
 
 const defaultPrefixRepoPath = 'https://hub.docker.com/v2/repositories'
@@ -13,11 +12,7 @@ class Retrieve {
     this.reposList = null
     this.recipesRepoList = new Map()
     this.appifiRecipesURL = 'https://raw.githubusercontent.com/JiangWeiGitHub/dockerMarket/master/recipe/release.json'
-    // this.appifiRecipesURL = (storeState().developer && storeState().developer.appstoreMaster === true) ?
-    //   'https://raw.githubusercontent.com/wisnuc/appifi-recipes/master/release.json' :
-    //   'https://raw.githubusercontent.com/wisnuc/appifi-recipes/release/release.json'
     RETRIEVE(`Using ${this.appifiRecipesURL}`)
-
   }
 
   async retrieveRecipes() {

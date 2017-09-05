@@ -4,19 +4,19 @@ import deepEqual from 'deep-equal'
 import Debug from 'debug'
 const DOCKER_STATE_OBSERVER = Debug('APPIFI:DOCKER_STATE_OBSERVER')
 
-import Advertiser from '../avahi/advertiser'
+// import Advertiser from '../avahi/advertiser'
 import DefaultParam from '../../lib/defaultParam'
 
 // default service
 let dockerMarketAppstationPort = new DefaultParam().getdockerMarketAppstationPort()
-const appifiAdvertiser = new Advertiser('dockerMarket AppStation', dockerMarketAppstationPort)
-appifiAdvertiser.start()
+// const appifiAdvertiser = new Advertiser('dockerMarket AppStation', dockerMarketAppstationPort)
+// appifiAdvertiser.start()
 
 class DockerStateObserver {
 
-  constructor() {
-    this.appAdvertiserList = []
-  }
+  // constructor() {
+  //   this.appAdvertiserList = []
+  // }
 
   // used for map // TODO why placed here
   _getRunningContainerInfo(installed) {
@@ -89,8 +89,8 @@ class DockerStateObserver {
         .map(inst => this._getRunningContainerInfo(inst))
         .filter(obj => obj !== null)
 
-      let survivorList = this._createSurvivorAdvertisingList(this.appAdvertiserList, runningServiceList)
-      this.appAdvertiserList = this._createNewAdvertisingList(survivorList, runningServiceList) 
+      // let survivorList = this._createSurvivorAdvertisingList(this.appAdvertiserList, runningServiceList)
+      // this.appAdvertiserList = this._createNewAdvertisingList(survivorList, runningServiceList) 
     }
   }
 }

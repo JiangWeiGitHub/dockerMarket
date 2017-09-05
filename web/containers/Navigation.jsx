@@ -31,9 +31,9 @@ const encodingIndex = enc => C(enc)
 
 const langMap = {
   undefined: ['[undefined]', '【未定义】'],
-  title: ['dockerMarket Cloud Apps', '闻上私有云应用'],
-  appstore: ['App Store', '应用市场'],
-  installedApps: ['Installed Apps', '已安装应用'],
+  title: ['Docker Market', 'Docker市场'],
+  appstore: ['App Store', 'Docker镜像'],
+  installedApps: ['Installed Apps', '已安装镜像'],
   switchToLang: ['中文', 'English']
 }
 

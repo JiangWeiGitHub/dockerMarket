@@ -14,6 +14,7 @@ import { AppInstallTask } from './dockerTasks'
 import { calcRecipeKeyString, appMainContainer, containersToApps } from '../../lib/utility'
 
 import Promise from 'bluebird'
+require("babel-polyfill")
 
 let dockerPidFile = null
 let rootDir = null

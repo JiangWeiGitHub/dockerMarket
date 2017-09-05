@@ -21,18 +21,18 @@ const encodingIndex = enc => C(enc)
 const langMap = {
   undefined: ['[undefined]', '【未定义】'],
   seeDetail: ['SEE DETAIL', '详细'],
-  thisAppAlreadyInstalled: ['This app is already installed.', '该应用已经安装。'],
-  thisAppIsInstalling: ['This app is installing.', '该应用正在安装。'],
-  thisAppIsNotInstalled: ['This app is not installed.', '该应用尚未安装。'],
+  thisAppAlreadyInstalled: ['This app is already installed.', '该Docker镜像已经安装。'],
+  thisAppIsInstalling: ['This app is installing.', '该Docker镜像正在安装。'],
+  thisAppIsNotInstalled: ['This app is not installed.', '该Docker镜像尚未安装。'],
   appstoreRefresh: ['refresh', '刷新'],
   btnInstall: ['INSTALL', '安装'],
-  appEngineNotStarted: ['AppEngine not started', '应用引擎尚未启动'],
-  appstoreUnavail: ['AppStore not ready', '应用商店尚未准备好'],
+  appEngineNotStarted: ['AppEngine not started', 'Docker引擎尚未启动'],
+  appstoreUnavail: ['AppStore not ready', 'Docker商店尚未准备好'],
   appstoreError: ['AppStore Error, failed to loading recipes from github.com', 
-    '应用商店错误，未能从Github.com载入应用列表。'],
-  appstoreLoading: ['Loading Apps from AppStore', '正在载入应用列表'],
+    'Docker商店错误，未能从Github.com载入Docker列表。'],
+  appstoreLoading: ['Loading Apps from AppStore', '正在载入Docker列表'],
   appstoreErrorDockerhub: ['AppStore Error, failed loading repository information from hub.docker.com',
-    '应用商店错误，未能从hub.docker.com载入应用的软件池信息'],
+    'Docker商店错误，未能从hub.docker.com载入应用的软件池信息'],
   recommendedApps: ['Recommended Apps', '推荐应用'],
 }
 
@@ -105,7 +105,7 @@ class CustomAppDialog extends React.Component {
     return (
       <Dialog 
         bodyStyle={{overflowX: 'hidden'}}
-        title='创建自定义Docker应用'
+        title='创建自定义Docker镜像'
         actions={[
           <FlatButton label='Cancel' primary={true} 
             onTouchTap={() => dispatch({ type: 'STORE_CUSTOMAPP', data: false })}
@@ -117,7 +117,7 @@ class CustomAppDialog extends React.Component {
       >
         <TextField 
           textareaStyle={{border: `solid 1px ${grey200}`, fontFamily: 'monospace'}}
-          floatingLabelText='编辑自定义Docke应用配置'
+          floatingLabelText='编辑自定义Docke镜像配置'
           fullWidth={true}
           multiLine={true}
           rows={12}
