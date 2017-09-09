@@ -103,5 +103,21 @@
         "volumes": []
       }
     ]
+  },
+  {
+    "appname": "busybox",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "busybox",
+        "namespace": "library",
+        "imageLink": "busybox.png",
+        "tag": "latest",
+        "repo": null,
+        "overlay": true,
+        "config": {},
+        "volumes": []
+      }
+    ]
   }
 ]
