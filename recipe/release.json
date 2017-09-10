@@ -103,5 +103,21 @@
         "volumes": []
       }
     ]
+  },
+  {
+    "appname": "busyboxGlibc",
+    "flavor": "vanilla",
+    "components": [
+      {
+        "name": "busybox",
+        "namespace": "library",
+        "imageLink": "busybox.png",
+        "tag": "1.27.2-glibc",
+        "repo": null,
+        "overlay": true,
+        "config": {},
+        "volumes": []
+      }
+    ]
   }
 ]
