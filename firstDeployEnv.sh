@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Platform: Ran through on Ubuntu 16.04.2 Desktop 64bit
+# Platform: Ran through on Ubuntu 16.04.3 Desktop 64bit
 #
 
 set -e
@@ -66,7 +66,7 @@ apt-get -y install build-essential python-minimal openssh-server btrfs-tools ima
 # install nodejs
 #
 banner "Install nodejs"
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 apt-get install -y nodejs
 ###################################################################
 
