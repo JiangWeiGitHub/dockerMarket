@@ -49,13 +49,13 @@ export const decoration = [
     name: 'APPSTORE',
     text: 'appstore',
     render: AppStoreRender,
-    themeColor: 'lime'
+    themeColor: 'blue'
   },
   {
     name: 'INSTALLED_APPS',
     text: 'installedApps',
     render: InstalledAppsRender,
-    themeColor: 'lime'
+    themeColor: 'blue'
   }
 ]
 
